@@ -1,18 +1,11 @@
 const mongoose = require('mongoose');
 const MealSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    ingredients: [{
-        name: String,
-        quantity: Number,
-        unit: String
-    }],
-    diet: {
-        type: String
-    }
-
+  name: String,
+  ingredients: [{
+    name: String,
+    quantity: Number,
+    unit: String
+  }],
+  diet: String
 });
-
 module.exports = mongoose.model('Meal', MealSchema);
