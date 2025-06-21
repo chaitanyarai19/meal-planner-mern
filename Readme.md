@@ -80,11 +80,3 @@ The server should start on the port specified in `.env` (default: 5000).
 
 - Use [Postman](https://www.postman.com/) or [curl](https://curl.se/) to test API endpoints.
 - Modify or extend the `Meal` model in `index.js` as needed.
-
-## License
-
-MIT
-
----
-
-*Feel free to
