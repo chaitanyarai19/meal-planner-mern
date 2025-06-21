@@ -1,90 +1,143 @@
 # Meal Planner Backend
 
-A simple Node.js and MongoDB backend for managing meals.
-
-## Features
-
-- RESTful API for CRUD operations on meals
-- MongoDB with Mongoose ODM
-- Express.js server
-- Environment variable support with dotenv
-
-## Prerequisites
-
-- [Node.js](https://nodejs.org/) (v14+ recommended)
-- [MongoDB](https://www.mongodb.com/try/download/community) (local or cloud)
-- [npm](https://www.npmjs.com/)
-
-## Setup Instructions
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/yourusername/meal-planner.git
-cd meal-planner/backend
-```
-
-### 2. Install Dependencies
-
-```bash
-npm install
-```
-
-### 3. Configure Environment Variables
-
-Create a `.env` file in the `backend` directory:
-
-```
-MONGODB_URI=mongodb://127.0.0.1:27017/meal-planner
-PORT=5000
-```
-
-Adjust the `MONGODB_URI` if using a remote MongoDB instance.
-
-### 4. Start MongoDB
-
-Make sure MongoDB is running locally:
-
-```bash
-mongod
-```
-
-### 5. Run the Server
-
-```bash
-node index.js
-```
-
-The server should start on the port specified in `.env` (default: 5000).
-
-## API Endpoints
-
-| Method | Endpoint      | Description         |
-|--------|--------------|---------------------|
-| GET    | /meals       | Get all meals       |
-| POST   | /meals       | Add a new meal      |
-| PUT    | /meals/:id   | Update a meal       |
-| DELETE | /meals/:id   | Delete a meal       |
-
-### Example Meal Object
-
-```json
-{
-  "name": "Chicken Salad",
-  "calories": 350,
-  "date": "2025-06-21T12:00:00.000Z"
-}
-```
-
-## Development
-
-- Use [Postman](https://www.postman.com/) or [curl](https://curl.se/) to test API endpoints.
-- Modify or extend the `Meal` model in `index.js` as needed.
-
-## License
-
-MIT
+A Node.js and MongoDB backend for managing meals, meal planning, and generating grocery lists.
 
 ---
 
-*Feel free to
+## API Endpoints
+
+| Method | Endpoint                | Description                        |
+|--------|-------------------------|------------------------------------|
+| POST   | /api/meals              | Add a new meal                     |
+| GET    | /api/meals              | Get all meals (optionally filter)  |
+| PUT    | /api/meals/:id          | Update a meal                      |
+| DELETE | /api/meals/:id          | Delete a meal                      |
+| POST   | /api/planner            | Assign meal to a day               |
+| GET    | /api/grocery-list       | Generate combined grocery list     |
+
+---
+
+## Sample Test Cases
+
+Assume your server is running at:  
+`http://localhost:5000`
+
+### 🍽️ 1. POST /api/meals — Create a Meal
+
+**Postman:**  
+Method: POST  
+URL: http://localhost:5000/api/meals  
+Body (JSON):
+```json
+{
+  "name": "Grilled Chicken Salad",
+  "ingredients": [
+    { "name": "Chicken", "quantity": 200, "unit": "grams" },
+    { "name": "Lettuce", "quantity": 100, "unit": "grams" }
+  ],
+  "diet": "high-protein"
+}
+```
+**curl:**
+```bash
+curl -X POST http://localhost:5000/api/meals \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Grilled Chicken Salad",
+    "ingredients": [
+      { "name": "Chicken", "quantity": 200, "unit": "grams" },
+      { "name": "Lettuce", "quantity": 100, "unit": "grams" }
+    ],
+    "diet": "high-protein"
+  }'
+```
+
+---
+
+### 📖 2. GET /api/meals — Get All Meals (optional ?diet=)
+
+**Get all meals:**
+```bash
+curl http://localhost:5000/api/meals
+```
+**Filter by diet:**
+```bash
+curl http://localhost:5000/api/meals?diet=vegetarian
+```
+
+---
+
+### ✏️ 3. PUT /api/meals/:id — Update a Meal
+
+Replace `<meal_id>` with a real _id from your database.
+
+**Postman:**  
+PUT http://localhost:5000/api/meals/<meal_id>  
+Body:
+```json
+{
+  "name": "Updated Chicken Salad",
+  "ingredients": [
+    { "name": "Chicken", "quantity": 250, "unit": "grams" },
+    { "name": "Lettuce", "quantity": 150, "unit": "grams" }
+  ],
+  "diet": "high-protein"
+}
+```
+**curl:**
+```bash
+curl -X PUT http://localhost:5000/api/meals/<meal_id> \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Updated Chicken Salad","ingredients":[{"name":"Chicken","quantity":250,"unit":"grams"},{"name":"Lettuce","quantity":150,"unit":"grams"}],"diet":"high-protein"}'
+```
+
+---
+
+### 🗑️ 4. DELETE /api/meals/:id
+
+**curl:**
+```bash
+curl -X DELETE http://localhost:5000/api/meals/<meal_id>
+```
+
+---
+
+### 📅 5. POST /api/planner — Assign Meal to Day
+
+**Postman Body:**
+```json
+{
+  "day": "Monday",
+  "meal": "<meal_id>"
+}
+```
+**curl:**
+```bash
+curl -X POST http://localhost:5000/api/planner \
+  -H "Content-Type: application/json" \
+  -d '{"day":"Monday","meal":"<meal_id>"}'
+```
+
+---
+
+### 🛒 6. GET /api/grocery-list — Generate Grocery List
+
+**curl:**
+```bash
+curl http://localhost:5000/api/grocery-list
+```
+
+---
+
+## ✅ Testing Checklist
+
+| Endpoint             | Method | Description                |
+|----------------------|--------|----------------------------|
+| /api/meals           | POST   | Add a new meal             |
+| /api/meals           | GET    | Get all meals (filterable) |
+| /api/meals/:id       | PUT    | Update meal info           |
+| /api/meals/:id       | DELETE | Remove a meal              |
+| /api/planner         | POST   | Assign meal to a day       |
+| /api/grocery-list    | GET    | Generate grocery list      |
+
+---
