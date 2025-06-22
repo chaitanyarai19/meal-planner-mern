@@ -22,9 +22,8 @@ app.use('/api/planner', require('./routes/planner'));
 app.use('/api/grocery-list', require('./routes/groceryList'));
 
 const PORT = process.env.PORT || 5000;
-// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-module.exports = app; // <-- Add this line
+module.exports = app; 
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {
