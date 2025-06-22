@@ -129,7 +129,7 @@ curl http://localhost:5000/api/grocery-list
 
 ---
 
-## ✅ Testing Checklist
+## ✅ 7. Testing Checklist
 
 | Endpoint             | Method | Description                |
 |----------------------|--------|----------------------------|
@@ -141,3 +141,43 @@ curl http://localhost:5000/api/grocery-list
 | /api/grocery-list    | GET    | Generate grocery list      |
 
 ---
+
+## 🧪8. Testing
+
+- **Frameworks:** Jest, Supertest, mongodb-memory-server
+- **How to run tests:**  
+  ```bash
+  npm test
+  ```
+- **Test Types:**
+  - **Unit tests:** Located in `tests/unit/`, these test individual models and logic (e.g., `meal.test.js` checks the Meal model’s structure and validation).
+  - **Integration tests:** Located in `tests/integration/`, these verify the interaction between your models and a real or in-memory database (e.g., `meal.integration.test.js` checks saving and retrieving meals).
+  - **API tests:** Located in `tests/api/`, these use Supertest to make HTTP requests to your Express API and verify responses (e.g., creating, updating, and retrieving meals).
+
+### Example Unit Test
+
+```javascript
+// tests/unit/meal.test.js
+const Meal = require('../../models/Meal');
+
+describe('Meal Model', () => {
+  it('should create a meal object', () => {
+    const meal = new Meal({
+      name: 'Test Meal',
+      ingredients: [{ name: 'Egg', quantity: 2, unit: 'pcs' }],
+      diet: 'vegetarian'
+    });
+    expect(meal.name).toBe('Test Meal');
+    expect(meal.ingredients.length).toBe(1);
+    expect(meal.diet).toBe('vegetarian');
+  });
+});
+```
+
+### Test Coverage
+
+After running `npm test`, a coverage report will be generated.  
+Include a screenshot or summary of your coverage in the README.
+
+**Test Coverage:**  
+![coverage screenshot](./coverage/coverage-summary.png)
