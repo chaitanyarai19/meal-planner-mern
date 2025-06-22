@@ -3,9 +3,13 @@ const router = express.Router();
 const Meal = require('../models/Meal');
 
 router.post('/', async (req, res) => {
-  const meal = new Meal(req.body);
-  await meal.save();
-  res.json(meal);
+  try {
+    const meal = new Meal(req.body);
+    await meal.save();
+    res.status(201).json(meal); // <-- Make sure to use 201 here
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 });
 
 router.get('/', async (req, res) => {
