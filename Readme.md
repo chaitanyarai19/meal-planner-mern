@@ -173,11 +173,3 @@ describe('Meal Model', () => {
   });
 });
 ```
-
-### Test Coverage
-
-After running `npm test`, a coverage report will be generated.  
-Include a screenshot or summary of your coverage in the README.
-
-**Test Coverage:**  
-![coverage screenshot](./coverage/coverage-summary.png)
